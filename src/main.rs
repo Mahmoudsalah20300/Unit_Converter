@@ -1,9 +1,22 @@
 
+/******************************************
+ * This Program is used to convert physical 
+ * quantities form system -> another system 
+ * ex: (SI -> British) or (British -> SI)
+ * 
+ * 
+ * Developer name: Mahmoud Ali
+ * Date: 31.12.2024
+ * Loc: Graz, Austria
+ * Version.N : ver 1.0.0
+********************************************/
+
+// Import some modules from input output
 use std::io::{self, Write};
 
-
-
+// activate automatic Debug features, allow cloning and copy
 #[derive(Debug,Clone,Copy)]
+// Length avaliable units 
 enum LenghtUnit{
     Meters,
     Kilometers,
@@ -11,7 +24,9 @@ enum LenghtUnit{
     Feet,
 }
 
+
 #[derive(Debug,Clone,Copy)]
+// Weight avaliable units 
 enum WeightUnit{
 
     KiloGrams,
@@ -22,6 +37,7 @@ enum WeightUnit{
 }
 
 #[derive(Debug,Clone,Copy)]
+// Temperature avaliable units 
 enum TemperatureUnit{
 
     Celsius,
@@ -29,9 +45,12 @@ enum TemperatureUnit{
     Kelvin,
 
 }
+//Declare a struct to handle all the conersion process
 struct UnitConverter;
 
+// Implement function bounded by the struct
 impl UnitConverter{
+    // Print the initial menu
     pub fn show_menu()
     {
         println!("Unit Converter CLI");
@@ -40,10 +59,11 @@ impl UnitConverter{
         println!("3. Convert Temperature");
         println!("4. Exit");
         println!("Choode an option: ");
+        // Clarify the output buffer, handle the Std/consol output and check if it is OK or not  
         io::stdout().flush().unwrap();
     }
 
-
+    // read the input from user to determine the process required
     pub fn handle_input()
     {
         let mut input = String::new();
@@ -59,7 +79,7 @@ impl UnitConverter{
             _ => println!("Invalid option, please try again."),
         }
     }
-
+    // Manage the length physical conversion
     pub fn convert_length()
     {
         println!("\n----------------------Start Length Conversion ----------------------\n");
@@ -127,6 +147,7 @@ impl UnitConverter{
 
     }
 
+    // Manage the weight conversion
     pub fn convert_weight()
     {
         // 1. Print the identification message.
@@ -195,6 +216,7 @@ impl UnitConverter{
 
     }
 
+    // Manage the temp conversion
     pub fn convert_temp()
     {
         println!("\n---------------------- Start Temperature Conversion ----------------------\n");
@@ -255,8 +277,9 @@ impl UnitConverter{
         println!("Result: {:.2} {:?} is {:.2} {:?}",value,from_unit,result,to_unit);  
         
     }
-}
+} // End of the struct implementaion
 
+// The function handles length logic conversion
 fn convert_length(value: f64, from: LenghtUnit, to: LenghtUnit) -> f64 {
     match (from, to) {
         // Same unit, no conversion needed
@@ -287,6 +310,7 @@ fn convert_length(value: f64, from: LenghtUnit, to: LenghtUnit) -> f64 {
     }
 }
 
+// The function handles weight logic conversion
 fn convert_weight(value: f64 , from: WeightUnit, to: WeightUnit) -> f64 {
 
     match(from, to){
@@ -317,6 +341,7 @@ fn convert_weight(value: f64 , from: WeightUnit, to: WeightUnit) -> f64 {
     }
 }
 
+// The function handles Temp logic conversion
 fn convert_temperature(value:f64, from:TemperatureUnit, to:TemperatureUnit ) -> f64{
     match(from, to){
         (TemperatureUnit::Celsius, TemperatureUnit::Fahrenheit) => value * 1.8 + 32.0,
@@ -332,12 +357,12 @@ fn convert_temperature(value:f64, from:TemperatureUnit, to:TemperatureUnit ) -> 
 }
 
 
-
-
+// The Entry Point of the function
 fn main() {
     loop{
-
+        // Call the menu function implemented in the struct
         UnitConverter::show_menu();
+        // Call handle input 
         UnitConverter::handle_input();
     }
 }
